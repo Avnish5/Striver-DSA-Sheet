@@ -1,7 +1,6 @@
-package Day_2_Arrays_Part_2;
+package DAY_2_Arrays_Part_2;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Inversion_Of_Array {
 

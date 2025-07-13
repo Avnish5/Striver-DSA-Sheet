@@ -1,4 +1,4 @@
-package Day_1_Arrays;
+package DAY_1_Arrays;
 
 public class Next_Permutation {
 

@@ -1,4 +1,4 @@
-package Day_1_Arrays;
+package DAY_1_Arrays;
 
 public class Best_Time_to_Buy_and_Sell_Stock {
 

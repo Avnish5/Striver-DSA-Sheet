@@ -1,4 +1,4 @@
-package Day_2_Arrays_Part_2;
+package DAY_2_Arrays_Part_2;
 
 public class Rotate_Matrix_OR_Image {
 
