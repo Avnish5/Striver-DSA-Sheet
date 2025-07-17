@@ -6,13 +6,13 @@ public class Four_sum {
 
     /**
      * 1, Brute-force solution
-     *
+     * <p>
      * Time Complexity: O(n^4)
-     *   - Four nested loops each ranging up to n (worst case).
-     *
+     * - Four nested loops each ranging up to n (worst case).
+     * <p>
      * Space Complexity: O(k)
-     *   - k = number of unique quadruplets (due to result storage in a set).
-     *   - Sorting is in-place, and constant extra space is used beyond output.
+     * - k = number of unique quadruplets (due to result storage in a set).
+     * - Sorting is in-place, and constant extra space is used beyond output.
      */
     public List<List<Integer>> fourSum1(int[] nums, int target) {
         Set<List<Integer>> resultSet = new HashSet<>();
@@ -40,15 +40,15 @@ public class Four_sum {
 
     /**
      * 2. Optimized solution using sorting and two pointers.
-     *
+     * <p>
      * Time Complexity: O(n^3)
-     *   - Outer two loops: O(n^2)
-     *   - Two-pointer inner loop: O(n)
-     *   => Total: O(n^3)
-     *
+     * - Outer two loops: O(n^2)
+     * - Two-pointer inner loop: O(n)
+     * => Total: O(n^3)
+     * <p>
      * Space Complexity: O(k) (unique pairs returned as ans)
-     *   - No extra data structures used beyond the result list.
-     *   - Sorting is in-place.
+     * - No extra data structures used beyond the result list.
+     * - Sorting is in-place.
      */
     public List<List<Integer>> fourSum2(int[] nums, int target) {
         List<List<Integer>> ans = new ArrayList<>();
@@ -96,6 +96,6 @@ public class Four_sum {
                 }
             }
         }
-
-
+        return ans;
     }
+}
