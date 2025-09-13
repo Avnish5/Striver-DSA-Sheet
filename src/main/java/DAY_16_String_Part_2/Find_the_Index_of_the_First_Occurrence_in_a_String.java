@@ -105,4 +105,18 @@ public class Find_the_Index_of_the_First_Occurrence_in_a_String {
 
         return -1; // needle not found
     }
+
+
+    public int[] getNoZeroIntegers(int n) {
+
+        for (int i = 1; i < n; i++) {
+            int a = i;
+            int b = n - a;
+
+            if (!String.valueOf(a).contains("0") && !String.valueOf(b).contains("0")) {
+                return new int[]{a,b};
+            }
+        }
+        return new int[]{-1,-1};
+    }
 }
