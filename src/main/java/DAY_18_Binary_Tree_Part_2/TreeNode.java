@@ -1,4 +1,4 @@
-package DAY_17_Binary_Tree_Part_1;
+package DAY_18_Binary_Tree_Part_2;
 
 public class TreeNode {
 
