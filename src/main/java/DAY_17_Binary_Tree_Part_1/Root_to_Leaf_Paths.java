@@ -50,4 +50,25 @@ public class Root_to_Leaf_Paths {
         return result;
 
     }
+
+    public int canBeTypedWords(String text, String brokenLetters) {
+       String[] strArray = text.split(" ");
+       int ans = 0;
+
+       for (String s : strArray) {
+           boolean flag = false;
+           for (int i = 0; i < brokenLetters.length(); i++) {
+               String ch = String.valueOf(brokenLetters.charAt(i));
+               if (s.contains(ch)) {
+                   flag = true;
+                   break;
+               }
+           }
+
+           if (!flag) ans++;
+       }
+
+       return ans;
+
+    }
 }
