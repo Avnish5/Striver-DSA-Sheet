@@ -12,33 +12,59 @@ public class Convert_TO_CSP {
      * - Best case (balanced tree): O(log n)
      * - Worst case (skewed tree): O(n)
      */
-    public void convertCSP(TreeNode root) {
-        if (root == null) return;
-
-        // Step 1: First recursively convert left and right subtrees
-        convertCSP(root.left);
-        convertCSP(root.right);
-
-        // Step 2: Calculate sum of children
-        int leftVal = (root.left != null) ? root.left.val : 0;
-        int rightVal = (root.right != null) ? root.right.val : 0;
-        int childSum = leftVal + rightVal;
-
-        // Step 3: Adjust current node or push value down to children
-        if (childSum >= root.val) {
-            root.val = childSum;
-        } else {
-            // If node value is greater, push it down
-            if (root.left != null) root.left.val = root.val;
-            if (root.right != null) root.right.val = root.val;
+    public void changeTree(TreeNode root) {
+        // Base case: If the current node
+        // is null, return and do nothing.
+        if (root == null) {
+            return;
         }
 
-        // Step 4: After updating children, fix current node again
-        // because children's values might have changed
-        int newLeftVal = (root.left != null) ? root.left.val : 0;
-        int newRightVal = (root.right != null) ? root.right.val : 0;
+        // Calculate the sum of the values of
+        // the left and right children, if they exist.
+        int child = 0;
+        if (root.left != null) {
+            child += root.left.val;
+        }
+        if (root.right != null) {
+            child += root.right.val;
+        }
+
+        // Compare the sum of children with
+        // the current node's value and update
+        if (child >= root.val) {
+            root.val = child;
+        } else {
+            // If the sum is smaller, update the
+            // child with the current node's value.
+            if (root.left != null) {
+                root.left.val = root.val;
+            } else if (root.right != null) {
+                root.right.val = root.val;
+            }
+        }
+
+        // Recursively call the function
+        // on the left and right children.
+        changeTree(root.left);
+        changeTree(root.right);
+
+        // Calculate the total sum of the
+        // values of the left and right
+        // children, if they exist.
+        int tot = 0;
+        if (root.left != null) {
+            tot += root.left.val;
+        }
+        if (root.right != null) {
+            tot += root.right.val;
+        }
+
+        // If either left or right child
+        // exists, update the current node's
+        // value with the total sum.
         if (root.left != null || root.right != null) {
-            root.val = newLeftVal + newRightVal;
+            root.val = tot;
         }
     }
+
 }
