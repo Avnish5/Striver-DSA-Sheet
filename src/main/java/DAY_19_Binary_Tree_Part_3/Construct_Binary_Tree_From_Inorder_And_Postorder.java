@@ -1,6 +1,7 @@
 package DAY_19_Binary_Tree_Part_3;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class Construct_Binary_Tree_From_Inorder_And_Postorder {
 
@@ -59,6 +60,22 @@ public class Construct_Binary_Tree_From_Inorder_And_Postorder {
                 hm);
 
         return root;
+    }
+
+    public int minimumTotal(List<List<Integer>> triangle) {
+      int ans = Integer.MAX_VALUE;
+      int temp = 0;
+
+      for (List<Integer> list : triangle) {
+          int min = Integer.MAX_VALUE;
+          for (int i : list) {
+              min = Math.min(min, i);
+          }
+          temp += min;
+          ans = Math.max(temp, min);
+        }
+
+      return ans;
     }
 
 }
