@@ -40,40 +40,54 @@ public class Reverse_Nodes_In_K_Group {
 
     }
 
+    /**
+     * 2. Optimal
+     *
+     * Time Complexity: O(N)
+     *      - Each node is visited and processed once during reversal.
+     *
+     * Space Complexity: O(1)
+     *      - Only pointers are used for manipulation, no extra data structures.
+     */
     public ListNode reverseKGroup2(ListNode head, int k) {
-       int N = findLength(head);
-       int groupSize = N / k;
+        int N = findLength(head);           // Find total nodes
+        int groupSize = N / k;              // Number of full groups of size k
 
-        ListNode prevHead = null;
-        ListNode currHead = head;
-        ListNode ansNode = null;
+        ListNode prevHead = null;           // Tail of previous reversed group
+        ListNode currHead = head;           // Start of current group to reverse
+        ListNode ansNode = null;            // Final head after complete reversal
 
+        // Process each group
         for (int i = 0; i < groupSize; i++) {
             ListNode prev = null;
             ListNode curr = currHead;
             ListNode next = null;
 
+            // Reverse current group of size 'k'
             for (int j = 0; j < k; j++) {
-                next = curr.next;
-                curr.next = prev;
-                prev = curr;
-                curr = next;
-
+                next = curr.next;   // Save next node
+                curr.next = prev;   // Reverse link
+                prev = curr;        // Move prev ahead
+                curr = next;        // Move curr ahead
             }
 
+            // If this is the first reversed group, set answer head
             if (prevHead == null) {
                 ansNode = prev;
             } else {
-                prevHead.next = prev;
+                prevHead.next = prev; // Link previous group to current reversed group
             }
 
-            prevHead = currHead;
-            currHead = curr;
+            prevHead = currHead;    // Update prevHead to connect next group later
+            currHead = curr;        // Move to next group start
         }
 
+        // Attach the remaining part which is less than 'k' nodes
         prevHead.next = currHead;
-        return ansNode;
+
+        return ansNode; // Final head of modified list
     }
+
 
 
 }
