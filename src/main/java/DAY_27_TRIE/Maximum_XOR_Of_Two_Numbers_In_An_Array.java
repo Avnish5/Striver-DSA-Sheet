@@ -1,5 +1,8 @@
 package DAY_27_TRIE;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Maximum_XOR_Of_Two_Numbers_In_An_Array {
 
     static class TrieNode {
@@ -75,7 +78,6 @@ public class Maximum_XOR_Of_Two_Numbers_In_An_Array {
      * - Total nodes possible = n * 32 → O(n)
      * SC → O(n)
      */
-
     public int findMaximumXOR(int[] nums) {
         TrieNode root = new TrieNode();
 

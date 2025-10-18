@@ -1,9 +1,6 @@
 package DAY_1_Arrays;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Set_Matrix_Zeroes {
 
@@ -35,46 +32,56 @@ public class Set_Matrix_Zeroes {
         }
     }
 
-    // 2. Hash-Map
+    /**
+     * 2. Using Hash-Map
+     *
+     * Time Complexity: O(m * n)
+     * - One pass to record rows and columns with zeros
+     * - One pass to set rows and columns to zero
+     *
+     * Space Complexity: O(m + n)
+     * - Uses two HashMaps to store affected rows and columns
+     */
     public void setZeroes2(int[][] matrix) {
-        int rowSize = matrix.length;
-        int columnSize = matrix[0].length;
+        int m = matrix.length;
+        int n = matrix[0].length;
 
-        List<List<Integer>> cordinatesList = new ArrayList<>();
+        // To store which rows and columns should be set to zero
+        Map<Integer, Boolean> rowMap = new HashMap<>();
+        Map<Integer, Boolean> colMap = new HashMap<>();
 
-        for (int i =0; i < rowSize; i++) {
-            for (int j = 0; j < columnSize; j++) {
+        // First pass: mark rows and columns that contain a zero
+        for (int i = 0; i < m ; i++) {
+            for (int j = 0; j < n; j++) {
                 if (matrix[i][j] == 0) {
-                    cordinatesList.add(Arrays.asList(i, j));
+                    // Record the row and column index
+                    rowMap.put(i, true);
+                    colMap.put(j, true);
                 }
             }
         }
 
-        HashMap<Integer, Boolean> rowMap = new HashMap<>();
-        HashMap<Integer, Boolean> columnMap = new HashMap<>();
-
-        for (List<Integer> cordinate : cordinatesList) {
-            int row = cordinate.get(0);
-            int column = cordinate.get(1);
-
-            if (! rowMap.containsKey(row)) {
-                for (int i = 0; i < columnSize; i++) {
-                    matrix[row][i] = 0;
+        // Second pass: update elements to zero if their row or column was marked
+        for (int i = 0; i < m ; i++) {
+            for (int j = 0; j < n; j++) {
+                // If the row OR column is marked, set the current element to zero
+                if (rowMap.containsKey(i) || colMap.containsKey(j)) {
+                    matrix[i][j] = 0;
                 }
             }
-
-            if (!columnMap.containsKey(column)) {
-                for (int j = 0; j < rowSize; j++) {
-                    matrix[j][column] = 0;
-                }
-            }
-            rowMap.put(row, true);
-            columnMap.put(column, true);
-
         }
     }
 
-    //3. Optimized
+    /**
+     * 3. Without  Using Hash-Map
+     *
+     * Time Complexity: O(m * n)
+     * - One pass to record rows and columns with zeros
+     * - One pass to set rows and columns to zero
+     *
+     * Space Complexity: O(m + n)
+     * - Uses two HashMaps to store affected rows and columns
+     */
     public void setZeroes3(int[][] matrix) {
 
         int m = matrix.length;
@@ -93,19 +100,39 @@ public class Set_Matrix_Zeroes {
         }
 
         for (int i = 0; i < m; i++) {
-            if (zeroRows[i]) {
-                for (int j = 0; j < n; j++) {
-                    matrix[i][j] = 0;
+            for (int j = 0; j < n; j++) {
+                    if (zeroRows[i] || zeroColumns[j]) {
+                        matrix[i][j] = 0;
+                    }
                 }
             }
+    }
+
+    public List<List<Integer>> generate(int numRows) {
+
+        List<List<Integer>> ans = new ArrayList<>();
+        ans.add(Arrays.asList(1));
+
+        if (numRows == 1) return ans;
+
+        ans.add(Arrays.asList(1, 1));
+
+        if (numRows == 2) return ans;
+
+        for (int i = 2; i <numRows; i++) {
+            List<Integer> list = new ArrayList<>(i);
+            List<Integer> prevList = ans.get(i - 1);
+
+            list.addFirst(prevList.getFirst());
+
+            for (int j = 1; j < i - 1; j++ ) {
+                list.add(j, prevList.get(j) + prevList.get(j-1));
+            }
+
+            list.add(prevList.getLast());
+            ans.add(list);
         }
 
-        for (int j = 0; j < n; j++) {
-            if (zeroColumns[j]) {
-                for (int i = 0; i < m; i++) {
-                    matrix[j][i] = 0;
-                }
-            }
-        }
+        return ans;
     }
 }
