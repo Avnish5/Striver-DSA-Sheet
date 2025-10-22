@@ -1,9 +1,8 @@
 package DAY_27_TRIE;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Number_Of_Distinct_Substrings_In_A_String {
 
@@ -108,43 +107,35 @@ public class Number_Of_Distinct_Substrings_In_A_String {
         return ans + 1; // +1 to include empty substring ""
     }
 
-    public List<List<Integer>> subsets(int[] nums) {
-        List<List<Integer>> ans = new ArrayList<>();
-       helper(nums, 0,ans, new ArrayList<>());
-       return ans;
-    }
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>((Integer a, Integer b) -> b - a);
 
-    private void helper(int[] nums, int i,  List<List<Integer>> ans, List<Integer> current) {
-        if ( i == nums.length) {
-           ans.add(new ArrayList<>(current));
+        for (int val : nums) {
+            if(pq.size() == k) {
+                if (pq.peek() > val) {
+                    pq.remove();
+                    pq.add(val);
+                }
+            }
+
+            pq.add(val);
         }
 
-        current.add(nums[i]);
-        helper(nums, i + 1, ans, current);
-        current.removeLast();
-        helper(nums, i + 1, ans, current);
-
-    }
-
-    public List<String> AllPossibleStrings(String s) {
-        // Code here
-        List<String> ans = new ArrayList<>();
-       helper2(s, 0, new StringBuilder(), ans);
-       return ans;
-
-    }
-
-    private void helper2(String s, int i, StringBuilder current, List<String> ans) {
-        if (i == s.length()) {
-            ans.add(current.toString());
-            return;
+        for (int i = 0; i < k - 1; i++) {
+            pq.remove();
         }
 
-        current.append(s.charAt(i));
-        helper2(s, i + 1, current, ans);
-        current.deleteCharAt(current.length() - 1);
-        helper2(s, i + 1, current, ans);
+        return pq.peek();
+    }
 
+    public static void main(String[] args) {
+        Stream<String> stream = Stream.of("HELLO","HOW","ARE");
+        Stream<String> filterStream = stream.map(String::toLowerCase);
+
+        List<String> list = filterStream.toList();
+        for (String s : list) {
+            System.out.println(s);
+        }
     }
 
 }
