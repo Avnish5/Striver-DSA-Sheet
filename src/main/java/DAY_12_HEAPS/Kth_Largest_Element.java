@@ -1,5 +1,6 @@
 package DAY_12_HEAPS;
 
+import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class Kth_Largest_Element {
@@ -25,5 +26,26 @@ public class Kth_Largest_Element {
 
         // The root (smallest in heap) is the Kth largest overall
         return pq.peek();
+    }
+
+    public ArrayList<Integer> topKSumPairs(int[] a, int[] b, int k) {
+       int n = a.length;
+        PriorityQueue<Integer> pq = new PriorityQueue<>((Integer c, Integer d) -> d -c);
+
+        for (int i = 0 ; i < n; i++) {
+            for (int j = i ; j < n; j++) {
+                int sum = a[i] + a[j];
+                pq.add(sum);
+                if(pq.size() > k) {
+                    pq.poll();
+                }
+            }
+        }
+
+        ArrayList<Integer> ans = new ArrayList<>(pq.stream().toList());
+        return ans;
+
+
+
     }
 }
