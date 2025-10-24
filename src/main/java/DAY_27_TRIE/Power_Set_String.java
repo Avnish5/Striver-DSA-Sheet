@@ -41,4 +41,20 @@ public class Power_Set_String {
         // Choice 2: Exclude the current character
         helper(s, i + 1, current, ans);
     }
+
+    public int maxProfit(int[] prices) {
+      int ans = 0;
+      int minimum = prices[0];
+
+      for (int i = 1; i < prices.length; i++) {
+          if (prices[i] < minimum) {
+              minimum = prices[i];
+          }
+
+          if (prices[i] - minimum > 0) {
+              ans = Math.max(ans, prices[i] - minimum);
+          }
+      }
+      return ans;
+    }
 }
