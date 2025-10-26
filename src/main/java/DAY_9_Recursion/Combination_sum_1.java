@@ -41,7 +41,7 @@ public class Combination_sum_1 {
         //include once
         helper1(candidates, target - candidates[index], ans, curr, index + 1);
         //include multiple times
-        helper1(candidates, target - candidates[index], ans, curr, index + 1);
+        helper1(candidates, target - candidates[index], ans, curr, index);
 
         curr.removeLast();
         //exclude
