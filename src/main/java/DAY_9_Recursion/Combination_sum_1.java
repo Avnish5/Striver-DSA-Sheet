@@ -30,6 +30,7 @@ public class Combination_sum_1 {
         if (target == 0) {
             if(!set.contains(curr)) {
                 ans.add(new ArrayList<>(curr));
+                set.add(curr);
             }
             return;
         }
