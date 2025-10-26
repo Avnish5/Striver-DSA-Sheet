@@ -65,11 +65,31 @@ public class Repated_And_MissingNumber {
         long sumN = (long) n * (n + 1) / 2;
 
         // Calculate expected sum of squares of first n natural numbers
-        long sumNSq = (long) n * (n + 1) * (2 * n + 1) / 6;
+        long sumNSq = (long) n * (n + 1) * (2L * n + 1) / 6;
 
         long sumActual = 0;      // To hold the actual sum of array elements
         long sumSqActual = 0;    // To hold the actual sum of squares of array elements
 
+        /*
+         * Important detail:
+         * -----------------
+         * We must cast before multiplication, i.e. (long) val * val
+         * instead of (long)(val * val)
+         *
+         * Reason:
+         * - In Java, 'val' is an int, so 'val * val' performs 32-bit integer multiplication.
+         * - If 'val' is large (e.g. 50,000), then val * val = 2,500,000,000 > 2,147,483,647 (int max)
+         *   → This causes integer overflow and the result becomes wrong before the cast happens.
+         * - When we use (long)(val * val), the multiplication overflows first, then we cast
+         *   the already incorrect (overflowed) value to long.
+         * - But when we use (long) val * val, the cast happens BEFORE multiplication,
+         *   so the multiplication is done in 64-bit long range — no overflow occurs.
+         *
+         * Example:
+         * int val = 50000;
+         * (long)(val * val) → overflow → -1794967296 (wrong)
+         * (long) val * val  → 2500000000 (correct)
+         */
         // Compute actual sum and sum of squares from the input array
         for (int num : arr) {
             sumActual += num;
@@ -98,7 +118,4 @@ public class Repated_And_MissingNumber {
         result.add((int) y);  // Add missing number
         return result;
     }
-
-
-
 }
