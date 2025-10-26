@@ -29,32 +29,29 @@ public class Inversion_Of_Array {
         int cnt = 0;
         int left = start;
         int right = mid+1;
-        ArrayList<Integer> temp = new ArrayList<>();
+        int[] temp = new int[(end - start) + 1];
+        int k = 0;
 
         while(left <= mid && right <= end) {
             if (arr[left] <= arr[right]) {
-                temp.add(arr[left]);
-                left++;
+                temp[k++] = arr[left++];
             } else {
-                temp.add(arr[right]);
-                right++;
+                temp[k++] = arr[right++];
                 cnt += (mid - left + 1);
             }
         }
 
         while (left <= mid) {
-            temp.add(arr[left]);
-            left++;
+            temp[k++] = arr[left++];
         }
 
         while (right <= end) {
-            temp.add(arr[right]);
-            right++;
+            temp[k++] = arr[right++];
         }
 
-        for (int i = start; i<=end; i++) {
-            arr[i] = temp.get(i-start);
-        }
+       for (int p = 0; p < temp.length; p++) {
+           arr[start + p] = temp[p];
+       }
 
         return cnt;
 
