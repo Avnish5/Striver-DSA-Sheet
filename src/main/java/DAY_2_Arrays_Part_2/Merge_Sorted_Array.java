@@ -1,7 +1,7 @@
 package DAY_2_Arrays_Part_2;
 
 import java.util.Arrays;
-
+import java.util.HashMap;
 public class Merge_Sorted_Array {
     /**
      * TC : 0(m+ n)
@@ -22,6 +22,8 @@ public class Merge_Sorted_Array {
                 nums1[k--] = nums2[j--];
             }
         }
+
+        String s = new String("ff").intern();
 
         // If there are remaining elements in nums2, copy them over to nums1
         // No need to copy remaining elements from nums1 because they are already in place
