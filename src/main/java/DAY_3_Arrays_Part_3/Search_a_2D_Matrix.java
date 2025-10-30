@@ -55,7 +55,7 @@ public class Search_a_2D_Matrix {
         while (top <= bot) {
             int mid = (top + bot) / 2;
 
-            if (matrix[mid][0] < target && matrix[mid][matrix[mid].length - 1] > target) {
+            if (matrix[mid][0] < target && matrix[mid][matrix[mid].length - 1] >= target) {
                 break; // found the row
             } else if (matrix[mid][0] > target) {
                 bot = mid - 1;
@@ -63,6 +63,9 @@ public class Search_a_2D_Matrix {
                 top = mid +1;
             }
         }
+
+        // If no valid row found
+        if (bot < 0 || top >= matrix.length) return false;
 
         int row = (top + bot) / 2;
         int left = 0;
@@ -84,7 +87,39 @@ public class Search_a_2D_Matrix {
         return false;
     }
 
+    /**
+     *Time Complexity:  O(log(m * n))
+     *    → Each iteration halves the search space.
+     *
+     *Space Complexity: O(1)
+     *. → Constant extra space used.
+     */
+    public boolean searchMatrix3(int[][] matrix, int target) {
+        int m = matrix.length;          // Number of rows
+        int n = matrix[0].length;       // Number of columns
 
+        int start = 0;
+        int end = m * n - 1;            // Treat the entire matrix as a 1D sorted array
+
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+
+            // Map 1D mid index to 2D coordinates
+            int row = mid / n;
+            int col = mid % n;
+
+            // Compare the target with the middle element
+            if (matrix[row][col] == target) {
+                return true;             // Found target
+            } else if (matrix[row][col] > target) {
+                end = mid - 1;           // Search left half
+            } else {
+                start = mid + 1;         // Search right half
+            }
+        }
+
+        return false;                    // Target not found
+    }
 
 }
 
