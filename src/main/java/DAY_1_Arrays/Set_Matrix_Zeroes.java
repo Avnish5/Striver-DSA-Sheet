@@ -108,31 +108,6 @@ public class Set_Matrix_Zeroes {
             }
     }
 
-    public List<List<Integer>> generate(int numRows) {
 
-        List<List<Integer>> ans = new ArrayList<>();
-        ans.add(Arrays.asList(1));
 
-        if (numRows == 1) return ans;
-
-        ans.add(Arrays.asList(1, 1));
-
-        if (numRows == 2) return ans;
-
-        for (int i = 2; i <numRows; i++) {
-            List<Integer> list = new ArrayList<>(i);
-            List<Integer> prevList = ans.get(i - 1);
-
-            list.addFirst(prevList.getFirst());
-
-            for (int j = 1; j < i - 1; j++ ) {
-                list.add(j, prevList.get(j) + prevList.get(j-1));
-            }
-
-            list.add(prevList.getLast());
-            ans.add(list);
-        }
-
-        return ans;
-    }
 }

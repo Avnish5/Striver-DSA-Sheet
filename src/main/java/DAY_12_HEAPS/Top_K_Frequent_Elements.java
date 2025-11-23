@@ -54,37 +54,46 @@ public class Top_K_Frequent_Elements {
      */
 
     public int[] topKFrequent2(int[] nums, int k) {
+        // Step 1: Count frequency of each number
         Map<Integer, Integer> map = new HashMap<>();
-
         for (int val : nums) {
             map.put(val, map.getOrDefault(val , 0) + 1);
         }
 
-        List<Integer>[] freq = new ArrayList[nums.length + 2];
+        // Step 2: Create buckets - index represents frequency
+        // freq[i] = list of numbers that appear exactly i times
+        List<Integer>[] freq = new ArrayList[nums.length + 1];
 
+        // Initialize the bucket lists
         for (int i = 0; i < freq.length; i++) {
             freq[i] = new ArrayList<>();
         }
 
-        for(Map.Entry<Integer,Integer> entry : map.entrySet()) {
-            int frequency = entry.getValue();
-            freq[frequency].add(entry.getKey());
+        // Step 3: Fill the buckets based on frequency
+        for (Map.Entry<Integer,Integer> entry : map.entrySet()) {
+            int frequency = entry.getValue();   // how many times the number appears
+            freq[frequency].add(entry.getKey()); // add number to the corresponding bucket
         }
 
+        // Step 4: Collect the top K frequent elements
         int[] res = new int[k];
         int idx = 0;
 
-        for (int i = freq.length - 1; i >=0; i--) {
+        // Traverse buckets from highest frequency to lowest
+        for (int i = freq.length - 1; i >= 0; i--) {
+            // For each number inside the bucket
             for (int num : freq[i]) {
-                res[idx++] = num;
+                res[idx++] = num; // add to result
 
+                // If we have collected K elements, return the result
                 if (idx == k) {
                     return res;
                 }
             }
         }
 
+        // In case something goes wrong (should never happen)
         return new int[]{0};
-
     }
+
 }
