@@ -127,5 +127,37 @@ public class Maximum_Sum_Combination {
         return result;
     }
 
+    class Solution {
+        public int[] maxSlidingWindow(int[] nums, int k) {
+            int n = nums.length;
+
+            PriorityQueue<int[]> pq =
+                    new PriorityQueue<>((a, b) -> b[0] - a[0]);  // max-heap
+
+            int[] result = new int[n - k + 1];
+            int idx = 0;
+
+            for (int i = 0; i < n; i++) {
+
+                // push value + index
+                pq.add(new int[] { nums[i], i });
+
+                // remove elements that are out of the window (i - k + 1)
+                while (pq.peek()[1] <= i - k) {
+                    pq.poll();
+                }
+
+                // when window hits size k
+                if (i >= k - 1) {
+                    result[idx++] = pq.peek()[0];
+                }
+            }
+
+            return result;
+        }
+    }
+
+
+
 
 }
