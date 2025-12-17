@@ -7,49 +7,52 @@ import java.util.Queue;
 
 public class Clone_Graph_BFS {
 
-        // Map to store mapping from original node → cloned node
-        // Helps to:
-        // 1. Avoid cloning the same node multiple times
-        // 2. Handle cycles in the graph
-        HashMap<Node, Node> map = new HashMap<>();
-
-        /**
-         * Clones an undirected graph using DFS
-         *
-         * @param node the starting node of the graph
-         * @return cloned graph's starting node
+         /**
+         * Clones an undirected graph using BFS
          *
          * Time Complexity: O(N)
-         * - Each node is visited exactly once
-         * - Each edge is traversed once
+         * - Each node is visited once
+         * - Each edge is processed once
          *
          * Space Complexity: O(N)
-         * - HashMap stores all N nodes
-         * - Recursion stack can go up to N in worst case (deep graph)
+         * - HashMap stores all cloned nodes
+         * - Queue stores nodes during BFS
          */
         public Node cloneGraph(Node node) {
-            // Base case: empty graph
+            // Edge case: empty graph
             if (node == null) return null;
 
-            // If this node is already cloned, return the clone
-            // This prevents infinite recursion in cyclic graphs
-            if (map.containsKey(node)) {
-                return map.get(node);
+            // Map: original node → cloned node
+            Map<Node, Node> map = new HashMap<>();
+
+            // Queue for BFS traversal
+            Queue<Node> q = new LinkedList<>();
+
+            // Create clone of starting node
+            Node cloneStart = new Node(node.val);
+            map.put(node, cloneStart);
+            q.add(node);
+
+            // BFS traversal
+            while (!q.isEmpty()) {
+                Node curr = q.poll();
+
+                // Traverse neighbors
+                for (Node neighbour : curr.neighbors) {
+
+                    // If neighbor is not cloned yet
+                    if (!map.containsKey(neighbour)) {
+                        map.put(neighbour, new Node(neighbour.val));
+                        q.add(neighbour);
+                    }
+
+                    // Add cloned neighbor to current cloned node
+                    map.get(curr).neighbors.add(map.get(neighbour));
+                }
             }
 
-            // Create a new cloned node with the same value
-            Node clone = new Node(node.val);
-
-            // Store the mapping before cloning neighbors
-            map.put(node, clone);
-
-            // Clone all neighbors recursively and add to cloned node
-            for (Node neighbour : node.neighbors) {
-                clone.neighbors.add(cloneGraph(neighbour));
-            }
-
-            // Return the cloned node
-            return clone;
+            // Return cloned graph start node
+            return cloneStart;
         }
 
 }
