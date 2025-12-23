@@ -54,4 +54,20 @@ public class Number_of_Islands_DFS {
 
             return ans;
         }
+
+    public int minDeletionSize(String[] strs) {
+         int n = strs[0].length();
+         int d = 0;
+
+         for(int i = 0; i < n ; i++) {
+             for(int j = 1; j < strs.length; j++) {
+                 if(strs[j-1].charAt(i) > strs[j].charAt(i))  {
+                     d++;
+                     break;
+                 }
+             }
+         }
+
+         return d;
+    }
 }

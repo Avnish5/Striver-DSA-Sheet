@@ -65,4 +65,43 @@ public class Is_Graph_Bipartite_DFS {
 
         return true;
     }
+
+    public int maxTwoEvents(int[][] events) {
+          int n = events.length;
+          int max = 0;
+
+        Arrays.sort(events, (a, b) -> a[0] - b[0]);
+
+          for(int i = 0; i < n; i++) {
+              int[] e1 = events[i];
+              int sum = 0;
+              sum += e1[2];
+
+              for(int j = i + 1; j < n; j++) {
+                  int[] e2 = events[j];
+                  if(e2[0] > e1[1] && e1[1] != e2[1]) {
+                      sum += e2[2];
+                      max =Math.max(sum, max);
+                      sum = e1[1];
+                  }
+              }
+
+              max =Math.max(sum, max);
+
+          }
+
+          return max;
+    }
+
+    public static void main(String[] args) {
+        Is_Graph_Bipartite_DFS d = new Is_Graph_Bipartite_DFS();
+        int[][] events = {
+                {1, 3, 2},
+                {4, 5, 2},
+                {2, 4, 3}
+        };
+
+        System.out.println(d.maxTwoEvents(events));
+
+    }
 }
