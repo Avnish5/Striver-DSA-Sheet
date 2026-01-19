@@ -1,5 +1,7 @@
 package DAY_11_Binary_Search;
 
+import java.util.Arrays;
+
 public class Single_Element_In_A_Sorted_Array {
 
     /**
@@ -110,6 +112,41 @@ public class Single_Element_In_A_Sorted_Array {
         // This return will never be reached for valid input
         return -1;
     }
+
+    public int helper(int i, int j, String s1, String s2, int[][] memo) {
+        if(i >= s1.length() && j >= s2.length()) {
+            return 0;
+        }
+
+        if(memo[i][j] != -1) {
+            return memo[i][j];
+        }
+
+        if(i >= s1.length()) {
+            return  memo[i][j]= (int)s2.charAt(j) + helper(i, j + 1, s1, s2, memo);
+        }
+
+        if(j >= s2.length()) {
+            return  memo[i][j]=(int)s1.charAt(i) + helper(i + 1,  j, s1, s2, memo);
+        }
+
+        if(s1.charAt(i) == s2.charAt(j)) {
+            return  memo[i][j]= helper(i+1, j+1, s1, s2, memo);
+        }
+
+        int option1 =  (int)s1.charAt(i) + helper(i + 1,  1, s1, s2, memo);
+        int option2 = (int)s2.charAt(j) + helper(i, j + 1, s1, s2, memo);
+
+        return memo[i][j]=Math.min(option2, option1);
+    }
+    public int minimumDeleteSum(String s1, String s2) {
+        int[][] memo = new int[1001][1001];
+        for(int i = 0; i < 1001; i++) {
+            Arrays.fill(memo[i], -1);
+        }
+       return helper(0, 0 ,s1, s2, memo);
+    }
+
 
 
 }
