@@ -60,4 +60,51 @@ public class Longest_Increasing_Subsequence {
 
         return recurionWithMemoization(-1, 0, nums, memo);
     }
+
+    /**
+     * 3. DP
+     *
+     * Time Complexity:
+     * ----------------
+     * O(n^2)
+     * - Outer loop runs n times
+     * - Inner loop runs up to n times
+     *
+     * Space Complexity:
+     * -----------------
+     * O(n)
+     * - dp array of size n
+     */
+
+    public int lengthOfLISDP(int[] nums) {
+        int n = nums.length;
+
+        // dp[i] = length of LIS ending at index i
+        int[] dp = new int[n];
+
+        // Each element is at least a subsequence of length 1
+        Arrays.fill(dp, 1);
+
+        int ans = 1;
+
+        // Build the dp array
+        for(int i = 0; i < n; i++) {
+
+            // Check all previous elements
+            for(int j = 0; j < i; j++) {
+
+                // If current element can extend increasing subsequence
+                if(nums[j] < nums[i]) {
+
+                    // Update dp[i] by extending subsequence at j
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+
+                    // Update global maximum LIS
+                    ans = Math.max(dp[i], ans);
+                }
+            }
+        }
+
+        return ans;
+    }
 }

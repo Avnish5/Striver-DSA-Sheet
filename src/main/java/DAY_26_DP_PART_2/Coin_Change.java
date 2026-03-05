@@ -186,4 +186,62 @@ public class Coin_Change {
         return dp[amount] == Integer.MAX_VALUE ? -1 : dp[amount];
     }
 
+    static final long NEG_INF = Long.MIN_VALUE / 2;
+
+    public long solve(int i, int trend, int n, int[] nums, long[][] memo) {
+        if(i == n) {
+            return trend == 3 ? 0: NEG_INF;
+        }
+
+        if(memo[i][trend] != Long.MIN_VALUE) {
+            return memo[i][trend];
+        }
+
+        long take = NEG_INF;
+        long skip = NEG_INF;
+
+        if(trend == 0) {
+            skip = solve(i + 1, 0, n, nums, memo);
+        }
+
+        if(trend == 3) {
+            take = nums[i];
+        }
+
+        if(i+1 < n) {
+            int curr = nums[i];
+            int next = nums[i+1];
+
+            if(trend == 0) {
+                take = Math.max(take, curr + solve(i+1, 1, n, nums, memo));
+            } else if (trend == 1) {
+                if(next > curr) {
+                    take = Math.max(take, curr + solve(i+1, 1, n, nums, memo));
+                } else if (next < curr) {
+                    take = Math.max(take, curr + solve(i+1, 2, n, nums, memo));
+                }
+            } else if (trend == 2) {
+                if(next < curr) {
+                    take = Math.max(take, curr + solve(i+1, 2, n, nums, memo));
+                } else if (next > curr) {
+                    take = Math.max(take, curr + solve(i+1, 3, n, nums, memo));
+                }
+            } else if (trend == 3 && next >  curr) {
+                take = Math.max(take, curr + solve(i+1, 3, n, nums, memo));
+            }
+        }
+
+        return memo[i][trend] = Math.max(skip, take);
+    }
+    public long maxSumTrionic(int[] nums) {
+        int n = nums.length;
+        long[][] memo = new long[n+1][4];
+
+        for(long[] arr : memo) {
+            Arrays.fill(arr, Long.MIN_VALUE);
+        }
+
+        return solve(0, 0 , n , nums, memo);
+    }
+
 }

@@ -1,7 +1,6 @@
 package DAY_17_Binary_Tree_Part_1;
 
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Queue;
 
 public class Maximum_Width_of_Binary_Tree {

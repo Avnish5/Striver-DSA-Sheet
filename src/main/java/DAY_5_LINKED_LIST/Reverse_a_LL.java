@@ -68,45 +68,5 @@ public class Reverse_a_LL {
         return prev;
     }
 
-    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-       ListNode head = null, tail = null;
-
-       if (list1.val > list2.val) {
-           head = list2;
-           tail = list2;
-           list2 = list2.next;
-       } else {
-           head = list1;
-           tail = list1;
-           list1 = list1.next;
-       }
-
-       while (list1 != null && list2 != null) {
-
-           if (list1.val > list2.val) {
-               tail.next = list2;
-               tail = list2;
-               list2 = list2.next;
-           } else {
-               tail.next = list1;
-               tail = list1;
-               list1 = list1.next;
-           }
-       }
-
-       while (list1 != null) {
-           tail.next = list1;
-           tail = list1;
-           list1 = list1.next;
-       }
-        while (list2 != null) {
-            tail.next = list2;
-            tail = list1;
-            list1 = list2.next;
-        }
-
-        return head;
-
-    }
 
 }

@@ -15,13 +15,20 @@ public class Check_Is_A_BT_Is_BST_Or_Not {
     }
 
     /**
-     * 1. Recursion
+     * 1. Recursion (Brute Force Approach)
      *
-     * Time Complexity: O(n^2)
-     *   - Each node is added to and removed from the queue exactly once.
-     *   - Setting next pointers is O(1) per node.
+     * Time Complexity: O(N^2)
+     *   - For every node, we compute:
+     *       maximum(left subtree) → O(N)
+     *       minimum(right subtree) → O(N)
+     *   - In worst case (skewed tree), this happens for every node.
+     *   - So total complexity becomes O(N^2).
      *
-     * Space Complexity: O(h)
+     * Space Complexity: O(H)
+     *   - Due to recursion stack.
+     *   - H = height of tree.
+     *   - Worst case (skewed tree) → O(N)
+     *   - Best case (balanced tree) → O(log N)
      */
     public boolean isValidBST1(TreeNode root) {
        if (root == null) return true;

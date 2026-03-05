@@ -142,6 +142,10 @@ public class Dijkstra_Algorithm {
             int currDist = curr[0];
             int node = curr[1];
 
+            // Skip outdated (stale) entry in the priority queue
+           // If we have already found a shorter path to this node,
+           // no need to process this longer distance.
+            // Ignore stale distance (lazy deletion in Dijkstra)
             if (currDist > dist[node]) continue;
 
             // Relax all adjacent edges

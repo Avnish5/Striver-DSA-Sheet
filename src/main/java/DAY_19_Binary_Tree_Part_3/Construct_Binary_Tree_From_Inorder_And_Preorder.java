@@ -68,31 +68,6 @@ public class Construct_Binary_Tree_From_Inorder_And_Preorder {
 
         return root;
     }
-
-    public int minimumTotal(List<List<Integer>> triangle) {
-        int n = triangle.size();
-        int[][] arr = new int[200][200];
-        for (int[] a : arr) {
-            Arrays.fill(a, Integer.MIN_VALUE);
-        }
-      return minimumTotalHelper(triangle, triangle.size() - 1, 0, 0, arr);
-    }
-
-    private int minimumTotalHelper(List<List<Integer>> triangle, int lastRow, int row, int col, int[][] arr) {
-        if (lastRow ==  row) {
-            return arr[row][col] = triangle.get(row).get(col);
-        }
-
-        if (arr[row][col] != Integer.MIN_VALUE) return arr[row][col];
-
-        return arr[row][col] = triangle.get(row).get(col) +
-                                Math.min(
-                                        minimumTotalHelper(triangle, lastRow, row + 1, col , arr) ,
-                                        minimumTotalHelper(triangle, lastRow, row + 1, col + 1, arr)
-                                ) ;
-    }
-
-
 }
 
 

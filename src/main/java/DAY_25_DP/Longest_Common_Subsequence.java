@@ -180,6 +180,7 @@ public class Longest_Common_Subsequence {
 
                 // If characters match,
                 // include this character in LCS
+                //we do i-1 and j-1 to prevent string out of bound exception
                 if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
                     dp[i][j] = 1 + dp[i - 1][j - 1];
                 }

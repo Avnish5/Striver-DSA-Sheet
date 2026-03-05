@@ -64,48 +64,53 @@ public class Longest_String_With_All_Prefixes {
     }
 
     /**
-     * 1. Using Trie
+     * 1. Using Trie (Without Sorting)
      *
      * Let:
      *    N = number of words
      *    L = maximum length of a word
      *
+     * -----------------------------------------------------
+     *
      * 1. Inserting all words into Trie:
      *    - For each word, traverse all characters → O(L)
      *    - For N words → O(N * L)
      *
-     * 2. Sorting words using Arrays.sort(words):
-     *    - Sorting takes O(N log N) comparisons
-     *    - Each string comparison (compareTo) takes O(L) in worst case
-     *    - Total → O(N log N * L)   <-- ✅ Dominant term
-     *
-     * 3. Checking each word using isValidWord():
+     * 2. Checking each word using isValidWord():
      *    - For one word → O(L)
      *    - For N words → O(N * L)
      *
-     * 4. Comparing and updating result string:
+     * 3. Comparing and updating result string:
      *    - word.length() = O(1)
-     *    - word.compareTo(result) = O(L)
-     *    - Done N times → O(N * L)
-     *
-     * ✅ Final Time Complexity = O(N log N * L)
+     *    - word.compareTo(result) = O(L) in worst case
+     *    - In worst case done for N words → O(N * L)
      *
      * -----------------------------------------------------
      *
-     * ✅ Space Complexity:
+     * Total Time Complexity:
+     *
+     *    O(N * L)   [Insertion]
+     *  + O(N * L)   [Validation]
+     *  + O(N * L)   [compareTo checks]
+     *
+     *  = O(N * L)
+     *
+     *  (Since all three are linear terms, final complexity remains O(N * L))
+     *
+     * -----------------------------------------------------
+     *
+     * Space Complexity:
      *
      * 1. Trie data structure:
      *    - Worst case: No common prefixes → N * L nodes
-     *    - Each node has fixed 26 pointers → O(1) space per node
+     *    - Each node has fixed 26 children → O(1) per node
      *    - Total → O(N * L)
      *
-     * 2. Additional space used:
-     *    - String result → O(L)
-     *    - Sorting is in-place → O(1) extra
+     * 2. Additional space:
+     *    - Result string → O(L)
      *
-     * ✅ Final Space Complexity = O(N * L)
+     * Final Space Complexity = O(N * L)
      */
-
     public String longestValidWord1(String[] words) {
         TrieNode root = new TrieNode();
         for (String word : words) {
@@ -113,12 +118,12 @@ public class Longest_String_With_All_Prefixes {
         }
 
         String result = "";
-        Arrays.sort(words);
 
         for (String word : words) {
-            if(isValidWord(root, word)) {
+            if (isValidWord(root, word)) {
                 if (word.length() > result.length() ||
-                        word.compareTo(result) < 0) {
+                        (word.length() == result.length() &&
+                                word.compareTo(result) < 0)) {
                     result = word;
                 }
             }

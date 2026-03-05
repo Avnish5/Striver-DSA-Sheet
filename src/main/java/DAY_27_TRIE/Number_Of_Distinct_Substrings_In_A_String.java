@@ -107,35 +107,4 @@ public class Number_Of_Distinct_Substrings_In_A_String {
         return ans + 1; // +1 to include empty substring ""
     }
 
-    public int findKthLargest(int[] nums, int k) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>((Integer a, Integer b) -> b - a);
-
-        for (int val : nums) {
-            if(pq.size() == k) {
-                if (pq.peek() > val) {
-                    pq.remove();
-                    pq.add(val);
-                }
-            }
-
-            pq.add(val);
-        }
-
-        for (int i = 0; i < k - 1; i++) {
-            pq.remove();
-        }
-
-        return pq.peek();
-    }
-
-    public static void main(String[] args) {
-        Stream<String> stream = Stream.of("HELLO","HOW","ARE");
-        Stream<String> filterStream = stream.map(String::toLowerCase);
-
-        List<String> list = filterStream.toList();
-        for (String s : list) {
-            System.out.println(s);
-        }
-    }
-
 }

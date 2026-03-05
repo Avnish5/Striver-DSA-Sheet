@@ -1,5 +1,8 @@
 package DAY_19_Binary_Tree_Part_3;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Check_For_Children_Sum_Property {
 
     class CustomNode {
@@ -81,5 +84,65 @@ public class Check_For_Children_Sum_Property {
         return (root.val == leftVal + rightVal)
                 && isSumProperty2(root.left)
                 && isSumProperty2(root.right);
+    }
+
+    /**
+     * 3. Using BFS
+     *
+     * Time Complexity: O(n)
+     * - Each node is visited exactly once.
+     * - For every node, we compute the sum of its children in O(1).
+     * - Total work is proportional to number of nodes n.
+     *
+     * Space Complexity: O(n)
+     * - In the worst case, the queue may store all nodes at the largest level.
+     * - In a complete binary tree, that can be up to n/2 nodes.
+     * - Therefore, overall space complexity is O(n).
+     */
+
+    public boolean isSumProperty3(TreeNode root) {
+
+        // If tree is empty OR single node tree → property holds
+        if (root == null || (root.left == null && root.right == null))
+            return true;
+
+        // Queue for BFS traversal
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+
+        // Traverse level by level
+        while (!q.isEmpty()) {
+
+            TreeNode node = q.poll();
+
+            int sum = 0;
+
+            // Skip leaf nodes (no need to check them)
+            if (node.left == null && node.right == null) {
+                continue;
+            }
+
+            // Add left child value if exists
+            if (node.left != null) {
+                sum += node.left.val;
+            }
+
+            // Add right child value if exists
+            if (node.right != null) {
+                sum += node.right.val;
+            }
+
+            // If current node does not satisfy child sum property → return false
+            if (node.val != sum) {
+                return false;
+            }
+
+            // Add children to queue for further checking
+            if (node.left != null) q.add(node.left);
+            if (node.right != null) q.add(node.right);
+        }
+
+        // If all nodes satisfy property
+        return true;
     }
 }

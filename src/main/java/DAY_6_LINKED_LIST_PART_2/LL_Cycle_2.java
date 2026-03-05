@@ -78,23 +78,4 @@ public class LL_Cycle_2 {
            return null;
     }
 
-    public int findSmallestInteger(int[] nums, int value) {
-        Set<Integer> set = new HashSet<>();
-        for (int i : nums) {
-            set.add(i / value);
-        }
-
-        List<Integer> list = new ArrayList<>(set);
-        Collections.sort(list);
-        boolean flag = false;
-
-        for (int i = 1; i < list.size(); i++) {
-            if (list.get(i - 1) != list.get(i) - 1) {
-                flag = true;
-                return list.get(i) - 1;
-            }
-        }
-
-        return !flag ? list.getLast() : -1;
-    }
 }

@@ -78,7 +78,7 @@ public class ZERO_ONE_Knapsack {
     public int knapsack2(int W, int val[], int wt[]) {
         int[][] dp = new int[val.length + 1][W+1];
 
-        for(int i = 0; i < val.length; i++) {
+        for(int i = 0; i <= val.length; i++) {
             Arrays.fill(dp[i], -1);
         }
         return knapSackMemo(W, val, wt, val.length, dp);
