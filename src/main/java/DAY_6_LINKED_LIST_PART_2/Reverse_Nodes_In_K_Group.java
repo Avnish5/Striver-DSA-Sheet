@@ -25,18 +25,19 @@ public class Reverse_Nodes_In_K_Group {
         }
 
         ListNode prevNode = reverseKGroup1(temp, k);
-        temp = head;
-        cnt = 0;
+        ListNode curr = head;
+        ListNode prev = null;
 
-        while (cnt < k) {
-            ListNode next = temp.next;
-            temp.next = prevNode;
-            prevNode = temp;
-            temp = next;
+        while(cnt < k) {
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
             cnt++;
         }
 
-        return prevNode;
+        head.next = prevNode;
+        return prev;
 
     }
 

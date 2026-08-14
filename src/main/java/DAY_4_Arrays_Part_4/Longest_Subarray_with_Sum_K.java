@@ -53,21 +53,19 @@ public class Longest_Subarray_with_Sum_K {
      * Space Complexity: O(n)
      *   - In the worst case, we may store all prefix sums in the hash map.
      */
+
     public int longestSubarray2(int[] arr, int k) {
         int n = arr.length;
         Map<Integer, Integer> map = new HashMap<>();  // Stores first occurrence of each prefix sum
         int prefixSum = 0;  // Running sum of elements
         int res = 0;        // Result: length of the longest subarray with sum k
+        map.put(0, -1);
 
         for (int i = 0; i < n; i++) {
             prefixSum += arr[i];  // Update prefix sum
 
-            // Case 1: If prefix sum equals k, the subarray from 0 to i sums to k
-            if (prefixSum == k) {
-                res = i + 1;
-            }
             // Case 2: If (prefixSum - k) is found in the map, there exists a subarray with sum k
-            else if (map.containsKey(prefixSum - k)) {
+            if (map.containsKey(prefixSum - k)) {
                 int prevIndex = map.get(prefixSum - k);
                 res = Math.max(res, i - prevIndex);  // Update result if this subarray is longer
             }
@@ -80,6 +78,5 @@ public class Longest_Subarray_with_Sum_K {
 
         return res;
     }
-
 
 }

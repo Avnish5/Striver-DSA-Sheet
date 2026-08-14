@@ -52,7 +52,7 @@ public class Remove_Nth_Node_From_End {
     public ListNode removeNthFromEnd2(ListNode head, int n) {
         ListNode fast = head, slow = head;
 
-        for (int i = 0; i< n; i++) {
+        for (int i = 0; i < n; i++) {
             fast = fast.next;
         }
 
@@ -71,29 +71,4 @@ public class Remove_Nth_Node_From_End {
         return head;
 
     }
-
-    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-            Set<ListNode> set = new HashSet<>();
-            while(headA != null) {
-                set.add(headA);
-                headA = headA.next;
-            }
-
-        while(headB != null) {
-            if (set.contains(headB)) {
-                return headB;
-            };
-            headB = headB.next;
-        }
-
-        return null;
-
-
-    }
-
-
-
-
-
-
 }

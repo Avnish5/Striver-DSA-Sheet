@@ -6,27 +6,56 @@ import java.util.PriorityQueue;
 
 public class Sort_Colors {
 
-    // 1 - Using frequency hashmap
-    public void sortColors1(int[] nums) {
-        Map<Integer, Integer> map = new HashMap<>();
+    /**
+     * 1.ort Colors (Counting Approach)
+     *
+     * Time Complexity (TC):
+     * ---------------------
+     * O(n)
+     *
+     * Explanation:
+     * - One pass to count the numbers.
+     * - Another pass to rewrite the array.
+     * - Total operations proportional to n.
+     *
+     * Space Complexity (SC):
+     * ----------------------
+     * O(1)
+     *
+     * Explanation:
+     * - Only three integer variables are used for counting.
+     * - No extra data structures are created.
+     */
+    public void sortColors(int[] nums) {
 
-        map.put(0,0);
-        map.put(1,0);
-        map.put(2,0);
+        // Counters for each color
+        int zeroCount = 0;
+        int oneCount = 0;
+        int twoCount = 0;
 
-        for (int num : nums) {
-            map.put(num, map.get(num) + 1);
+        // First pass: count occurrences of 0, 1, and 2
+        for(int num : nums) {
+            if(num == 0) zeroCount++;
+            if(num == 1) oneCount++;
+            if(num == 2) twoCount++;
         }
 
+        // Index to fill the array from start
         int idx = 0;
 
-        for (int color = 0; color <= 2; color++) {
-            int freq = map.get(color);
+        // Fill all 0s
+        for(int i = 0; i < zeroCount; i++) {
+            nums[idx++] = 0;
+        }
 
-            for (int i = 0; i < freq; i++) {
-                nums[idx] = color;
-                idx++;
-            }
+        // Fill all 1s
+        for(int i = 0; i < oneCount; i++) {
+            nums[idx++] = 1;
+        }
+
+        // Fill all 2s
+        for(int i = 0; i < twoCount; i++) {
+            nums[idx++] = 2;
         }
     }
 

@@ -17,7 +17,7 @@ public class Pascals_Triangle {
      */
     public List<List<Integer>> generate(int numRows) {
         List<List<Integer>> ans = new ArrayList<>();
-        ans.add(Arrays.asList(1)); // First row is always [1]
+        ans.add(List.of(1)); // First row is always [1]
 
         if (numRows == 1) return ans;
 

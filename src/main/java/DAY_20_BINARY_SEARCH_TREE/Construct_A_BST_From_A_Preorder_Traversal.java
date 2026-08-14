@@ -12,7 +12,7 @@ public class Construct_A_BST_From_A_Preorder_Traversal {
 
         // Find the first element greater than root -> start of right subtree
         int leftEnd = e + 1;
-        for (int i = s; i <= e; i++) {
+        for (int i = s+1; i <= e; i++) {
             if (preorder[i] > t) {
                 leftEnd = i;
                 break;

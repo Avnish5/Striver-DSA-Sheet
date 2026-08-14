@@ -43,4 +43,49 @@ public class Populate_Next_Right_Pointer_Of_Tree {
         return root; // return root with updated next pointers
     }
 
+
+    /**
+Time Complexity:
+----------------
+O(n)
+Every node is visited exactly once.
+
+Space Complexity:
+-----------------
+O(h)
+Recursive stack space,
+where h = height of tree.
+
+For perfect binary tree:
+h = log n
+
+So:
+Space Complexity = O(log n)
+*/
+    public Node connect2(Node root) {
+
+        // Base case
+        if (root == null) return root;
+
+        // Connect left child to right child
+        // Example: 4 -> 5
+        if (root.left != null) {
+            root.left.next = root.right;
+        }
+
+        // Connect right child to next subtree's left child
+        // Example: 5 -> 6
+        if (root.right != null && root.next != null) {
+            root.right.next = root.next.left;
+        }
+
+        // Recursively connect left subtree
+        connect2(root.left);
+
+        // Recursively connect right subtree
+        connect2(root.right);
+
+        return root;
+    }
+
 }

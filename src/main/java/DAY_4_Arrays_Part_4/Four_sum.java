@@ -80,6 +80,12 @@ public class Four_sum {
                     } else if (sum < target) {
                         p++; // Increase sum by moving left pointer right
                     } else {
+
+                        // Skip duplicate elements after p++
+                        while (p < q && nums[p] == nums[p + 1]) p++;
+                        // Skip duplicate elements after q--
+                        while (p < q && nums[q] == nums[q - 1]) q--;
+
                         // Found a valid quadruplet
                         List<Integer> smallAns = List.of(nums[i], nums[j], nums[p], nums[q]);
                         ans.add(smallAns);
@@ -88,10 +94,6 @@ public class Four_sum {
                         p++;
                         q--;
 
-                        // Skip duplicate elements after p++
-                        while (p < q && nums[p] == nums[p - 1]) p++;
-                        // Skip duplicate elements after q--
-                        while (p < q && nums[q] == nums[q + 1]) q--;
                     }
                 }
             }

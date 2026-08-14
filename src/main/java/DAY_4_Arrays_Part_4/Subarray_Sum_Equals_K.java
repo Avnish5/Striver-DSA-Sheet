@@ -20,14 +20,10 @@ public class Subarray_Sum_Equals_K {
         int count  = 0;  // Number of subarrays found with sum = k
         Map<Integer, Integer> map = new HashMap<>();  // Map to store frequencies of prefix sums
         int prefixSum = 0;  // Running prefix sum of elements
+        map.put(0, 1);
 
         for (int i = 0; i < nums.length; i++) {
             prefixSum += nums[i];  // Update prefix sum with current element
-
-            // If prefixSum itself equals k, then subarray [0..i] sums to k
-            if (prefixSum == k) {
-                count++;
-            }
 
             // Check if there exists a prefix sum that when removed leaves sum k
             if (map.containsKey(prefixSum - k)) {
