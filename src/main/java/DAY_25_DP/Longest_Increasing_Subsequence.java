@@ -1,6 +1,8 @@
 package DAY_25_DP;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Longest_Increasing_Subsequence {
 
@@ -107,4 +109,113 @@ public class Longest_Increasing_Subsequence {
 
         return ans;
     }
+
+
+    /*
+     * 4. Binary Search / Patience Sorting
+     *
+     * Approach:
+     * ----------
+     * Maintain an array/list `arr` where:
+     *
+     * arr[i] = smallest possible tail of an increasing
+     *          subsequence of length (i + 1).
+     *
+     * For every number:
+     * - Find the first element >= nums[i] using lower bound.
+     * - If no such element exists, add nums[i].
+     * - Otherwise, replace that element with nums[i].
+     *
+     * We use lower bound (first element >= target) because
+     * the subsequence must be strictly increasing, so duplicates
+     * should replace an existing value instead of increasing the size.
+     *
+     *
+     * Time Complexity:
+     * ----------------
+     * O(n log n)
+     * - We process each of the n elements once.
+     * - For every element, binary search takes O(log n).
+     *
+     *
+     * Space Complexity:
+     * -----------------
+     * O(n)
+     * - `arr` can contain at most n elements.
+     */
+
+    public int lengthOfLIS4(int[] nums) {
+        List<Integer> arr = new ArrayList<>();
+
+        for (int i = 0; i < nums.length; i++) {
+
+            // Find the first index where arr[index] >= nums[i].
+            // This is called lower bound.
+            int index = binarySearch(arr, nums[i]);
+
+            // If nums[i] is greater than every element in arr,
+            // it can extend the increasing subsequence.
+            if (index == arr.size()) {
+                arr.add(nums[i]);
+            }
+            else {
+                // Replace the existing value with nums[i].
+                // A smaller tail gives us a better chance to
+                // build a longer increasing subsequence later.
+                arr.set(index, nums[i]);
+            }
+        }
+
+        // Size of arr represents the length of LIS.
+        return arr.size();
+    }
+
+
+    /*
+     * Lower Bound Binary Search
+     *
+     * Returns the first index where:
+     *
+     * arr[index] >= target
+     *
+     * If every element is smaller than target,
+     * returns arr.size().
+     */
+    public int binarySearch(List<Integer> arr, int target) {
+
+        // Inclusive search range: [left, right]
+        int left = 0;
+        int right = arr.size() - 1;
+
+        // Default result means:
+        // target is greater than every element.
+        int result = arr.size();
+
+        while (left <= right) {
+
+            int mid = left + (right - left) / 2;
+
+            if (arr.get(mid) < target) {
+
+                // arr[mid] is too small.
+                // Search on the right side.
+                left = mid + 1;
+
+            }
+            else {
+
+                // arr[mid] can be the answer because
+                // arr[mid] >= target.
+                result = mid;
+
+                // But we need the FIRST such position,
+                // so continue searching on the left.
+                right = mid - 1;
+            }
+        }
+
+        return result;
+    }
+
+
 }
